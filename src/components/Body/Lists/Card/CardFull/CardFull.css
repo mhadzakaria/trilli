@@ -1,0 +1,11 @@
+.Teams-List{
+  float: left;
+}
+
+.Button-CloseModal{
+  top: 3px;
+  right: 3px;
+  left: auto;
+  bottom:auto;
+  position: absolute
+}

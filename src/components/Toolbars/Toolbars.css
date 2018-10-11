@@ -1,0 +1,11 @@
+.Toolbars{
+  /* padding: 10px;
+  box-sizing: border-box;
+  background-color: rgba(0,0,0,.15);
+  border-radius: 3px;
+  margin-bottom: 5px; */
+  flex: none;
+  position: relative;
+  height: auto;
+  padding: 5px;
+}

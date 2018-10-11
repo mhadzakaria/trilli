@@ -1,0 +1,13 @@
+.Headers{
+  flex: none;
+  height: auto;
+  overflow: hidden;
+  padding: 8px 4px 8px 8px;
+  position: relative;
+  transition: padding .1s ease-in;
+}
+.Header{
+  float: left;
+  margin-right: 5px;
+  color: white;
+}
