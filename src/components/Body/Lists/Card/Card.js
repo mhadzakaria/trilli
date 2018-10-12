@@ -5,9 +5,9 @@ import './Card.css'
 import Team from '../../Team/Team'
 
 class Card extends Component {
-  render () {
+  render() {
     const teams = this.props.teams.map((team, index) => {
-      return <Team key={index} name={team.name}/>
+      return <Team key={index} name={team.name} />
       // return <div className="Team-list" >{team.name[0]}</div>
     });
 

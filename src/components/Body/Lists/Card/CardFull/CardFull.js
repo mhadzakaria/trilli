@@ -15,7 +15,7 @@ const cardFull = (props) => {
       <p>MEMBERS</p>
       <div className="Teams-List">
         {card.teams.map((team, index) => (
-          <Team key={index} name={team.name}/>
+          <Team key={index} name={team.name} />
         ))}
       </div>
     </div>

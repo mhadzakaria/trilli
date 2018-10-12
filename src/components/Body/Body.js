@@ -7,18 +7,27 @@ import Header from './Header/Header'
 
 
 class Body extends Component {
-  render () {
+  render() {
     const lists = this.props.lists.map(list => {
+      const cards = list.cards ? list.cards : []
       return (
-        <Lists key={list.id} id={list.id} title={list.name} cards={list.cards} newCardName={this.props.newCardName} addNewCard={this.props.addNewCard} showCard={this.props.showCard} />
+        <Lists
+          key={list.id}
+          id={list.id}
+          title={list.name}
+          cards={cards}
+          newCardName={this.props.newCardName}
+          addNewCard={this.props.addNewCard}
+          showCard={this.props.showCard}
+          deleteList={this.props.deleteList} />
       )
     });
 
     let newList = <p onClick={this.props.newListForm}>+ Add New List</p>;
-    if (this.props.added){
+    if (this.props.added) {
       newList = (
         <div>
-          <input onChange={this.props.changeNameList} type="text" placeholder="List name..."/><br />
+          <input onChange={this.props.changeNameList} type="text" placeholder="List name..." /><br />
           <button onClick={this.props.createList}>Add</button>
           <button onClick={this.props.closeFormList}>Cancel</button>
         </div>
@@ -32,7 +41,7 @@ class Body extends Component {
             <Header teams={this.props.teams} />
             <div className="Body-Canvas">
               <div className="Body-Lists">
-                { lists }
+                {lists}
                 <div className="Body-Add-List">
                   {newList}
                 </div>
