@@ -1,9 +1,9 @@
 .Toolbars{
   /* padding: 10px;
   box-sizing: border-box;
-  background-color: rgba(0,0,0,.15);
   border-radius: 3px;
   margin-bottom: 5px; */
+  background-color: rgba(0, 0, 0, 0.1);
   flex: none;
   position: relative;
   height: auto;

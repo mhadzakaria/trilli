@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import './Header.css';
-import Aux from '../../../hoc/Aux/Aux';
-import Team from '../Team/Team'
+import Aux from '../../hoc/Aux/Aux';
+import Team from '../Body/Team/Team';
 
 class Header extends Component {
   render () {

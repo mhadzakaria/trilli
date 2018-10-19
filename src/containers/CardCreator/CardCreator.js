@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Toolbars from '../../components/Toolbars/Toolbars';
-import Toolbar from '../../components/Toolbar/Toolbar';
 import Body from '../../components/Body/Body';
 import Modal from '../../components/Modal/Modal';
 import Aux from '../../hoc/Aux/Aux';
@@ -27,46 +26,79 @@ class CardCreator extends Component {
   };
 
   componentDidMount() {
-    this.setState({ loading: true })
-    Axios.get('lists.json')
+    this.loadingOpen()
+    Axios.get('/lists.json')
       .then(response => {
-        const keys = Object.keys(response.data)
-        const newLists = keys.map(key => {
-          return response.data[key]
-        })
+        if (response !==  null){
+          const keys = Object.keys(response.data)
+          const newLists = keys.map(key => {
+            return response.data[key]
+          })
+  
+          const newListsFiltered = newLists.filter(value => {
+            return !value.deleted
+          })
+  
+          const newIdFirebase = keys.map(key => {
+            return { id: response.data[key].id, key: key }
+          })
+  
+          const newCardsName = newListsFiltered.map(list => {
+            return { listId: list.id, newName: '' }
+          })
+  
+          this.setState({
+            lists: [
+              ...newListsFiltered
+            ],
+            listIdFirebase: [
+              ...newIdFirebase
+            ],
+            lastId: newLists[newLists.length - 1].id,
+            loading: false,
+            newCardName: [
+              ...newCardsName
+            ]
+          })
 
-        const newListsFiltered = newLists.filter(value => {
-          return !value.deleted
-        })
-
-        const newIdFirebase = keys.map(key => {
-          return { id: response.data[key].id, key: key }
-        })
-
-        const newCardsName = newListsFiltered.map(list => {
-          return { listId: list.id, newName: '' }
-        })
-
-        this.setState({
-          lists: [
-            ...newListsFiltered
-          ],
-          listIdFirebase: [
-            ...newIdFirebase
-          ],
-          lastId: newLists[newLists.length - 1].id,
-          loading: false,
-          newCardName: [
-            ...newCardsName
-          ]
-        })
+          // redirect to selected card
+          const currentURL = new URL(window.location.href)
+          const pathName = currentURL.pathname.split("/")
+          if (pathName[1] === "card") {
+            const cards = this.state.lists.map(list => {
+              return (
+                list.cards.map(card => {
+                  return ({list: list, card: card})
+                })
+              )
+            })
+  
+            const aa = [].concat(...cards);
+            const bb = aa.filter(cl => {
+              return cl.card.id === pathName[2]
+            })
+            console.log(bb)
+            if (bb.length !== 0){
+              const cc = {
+                id: bb[0].list.id,
+                name: bb[0].list.name,
+                cards: [bb[0].card]
+              }
+            
+              this.setState({
+                activeCard: cc,
+                modalCard: true
+              })
+            }
+          }
+        }
       })
   }
 
   // CRUD >>>>>>>>>>>
   addNewList = () => {
     if (this.state.listTitle !== null) {
-      this.setState({ loading: true })
+      this.loadingOpen()
 
       const id = (parseInt(this.state.lastId) + 1).toString();
       const newList = {
@@ -101,17 +133,10 @@ class CardCreator extends Component {
   };
 
   addNewCard = (event) => {
-    this.setState({ loading: true })
+    this.loadingOpen()
     const randomTeams = this.generateRandomTeams()
     const id = event.target.dataset.listsId;
-
-    const firebaseIdIndex = this.state.listIdFirebase.findIndex(f => {
-      return f.id === id
-    });
-
-    const firebaseId = {
-      ...this.state.listIdFirebase[firebaseIdIndex]
-    }
+    const firebaseId = this.getFirebaseId(id)
 
     const listIndex = this.state.lists.findIndex(l => {
       return l.id === id
@@ -160,13 +185,7 @@ class CardCreator extends Component {
 
   deleteListHandler = (event) => {
     const id = event.target.dataset.listId;
-    const firebaseIdIndex = this.state.listIdFirebase.findIndex(f => {
-      return f.id === id
-    });
-
-    const firebaseId = {
-      ...this.state.listIdFirebase[firebaseIdIndex]
-    };
+    const firebaseId = this.getFirebaseId(id);
 
     const listIndex = this.state.lists.findIndex(l => {
       return l.id === id
@@ -194,7 +213,18 @@ class CardCreator extends Component {
         });
       });
   }
-  // CRUD >>>>>>>>>>>
+  // CRUD <<<<<<<<<<<
+
+  getFirebaseId = (id) => {
+    const firebaseIdIndex = this.state.listIdFirebase.findIndex(f => {
+      return f.id === id
+    });
+
+    const firebaseId = {
+      ...this.state.listIdFirebase[firebaseIdIndex]
+    };
+    return firebaseId;
+  }
 
   generateRandomTeams = () => {
     const teamsQty = Math.floor(Math.random() * 4) + 1;
@@ -281,6 +311,10 @@ class CardCreator extends Component {
     return list
   }
 
+  loadingOpen = () => {
+    this.setState({ loading: true })
+  }
+
   render() {
     let modalContent = null;
     if (this.state.modalCard) {
@@ -298,9 +332,7 @@ class CardCreator extends Component {
           <Modal show={this.state.modalCard} closeModal={this.hideModalCard}>
             {modalContent}
           </Modal>
-          <Toolbars>
-            <Toolbar />
-          </Toolbars>
+          <Toolbars />
           <Body
             lists={this.state.lists}
             newCardName={this.changeCardName}

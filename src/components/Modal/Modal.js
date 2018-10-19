@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './Modal.css';
 import Aux from '../../hoc/Aux/Aux';
@@ -16,14 +17,14 @@ class Modal extends Component {
   render() {
     return (
       <Aux>
-        <div className="Modal-Background"
-          style={{
-            transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
-            opacity: this.props.show ? '1' : '0'
-          }}
-          onClick={this.props.closeModal}
-        >
-        </div>
+        <Link to="/">
+          <div className="Modal-Background"
+            style={{
+              transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
+              opacity: this.props.show ? '1' : '0'
+            }}
+            onClick={this.props.closeModal} />
+        </Link>
         <div className="Modal"
           style={{
             transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Aux from '../../hoc/Aux/Aux';
 import './Body.css';
 import Lists from './Lists/Lists';
-import Header from './Header/Header'
+import Header from '../Header/Header'
 
 
 class Body extends Component {
@@ -23,7 +24,11 @@ class Body extends Component {
       )
     });
 
-    let newList = <p onClick={this.props.newListForm}>+ Add New List</p>;
+    let newList = (
+      <p onClick={this.props.newListForm}>
+        <FontAwesomeIcon icon="plus" /> Add New List
+      </p>
+    );
     if (this.props.added) {
       newList = (
         <div>
