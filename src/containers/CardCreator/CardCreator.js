@@ -300,7 +300,6 @@ class CardCreator extends Component {
     const cardNameIndex = this.state.newCardName.findIndex(l => {
       return l.listId === id
     });
-
     const cardName = {
       ...this.state.newCardName[cardNameIndex]
     };
