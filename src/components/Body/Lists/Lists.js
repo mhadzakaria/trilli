@@ -9,7 +9,10 @@ import './Lists.css'
 
 class Lists extends Component {
   render() {
-    const cards = this.props.cards.map(card => {
+    const cardsFiltered = this.props.cards.filter(value => {
+      return !value.deleted
+    })
+    const cards = cardsFiltered.map(card => {
       let pathName = "/card/" + card.id;
       return (
         <Link to={pathName} key={card.id}>
