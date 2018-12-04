@@ -1,0 +1,19 @@
+.Toolbar{
+  display: inline-block;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  background: rgba(255, 255, 255, 0.3);
+  margin-right: 5px;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  height: 35px;
+}
+.Toolbar a{
+  text-decoration: none;
+  color: inherit;
+}
