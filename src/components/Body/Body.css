@@ -1,0 +1,22 @@
+.Body{
+  position: relative;
+  flex-grow: 1;
+  box-sizing: border-box;
+  height: 500px;
+}
+.Body-Lists{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

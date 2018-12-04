@@ -1,0 +1,32 @@
+import React, { Component } from 'react';
+
+import Aux from '../../../hoc/Aux/Aux'
+import Card from './Card/Card'
+import './Lists.css'
+
+
+class Lists extends Component {
+  render () {
+    const cards = this.props.cards.map(card => {
+      return (
+        <Card key={card.id} title={card.title} teams={card.teams}/>
+      )
+    })
+    return (
+      <Aux>
+        <div className="Lists">
+          <h2>{this.props.title}</h2>
+          <div className="Lists-card">
+            { cards }
+          </div>
+          <div className="Lists-new-card">
+            <input onChange={this.props.newCardName} type="text" placeholder="Card name..." data-lists-id={this.props.id} />
+            <button onClick={this.props.addNewCard} data-lists-id={this.props.id} >+ Add</button>
+          </div>
+        </div>
+      </Aux>
+    )
+  }
+}
+
+export default Lists;

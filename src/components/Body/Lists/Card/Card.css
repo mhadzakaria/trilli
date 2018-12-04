@@ -1,0 +1,15 @@
+.Card{
+  padding: 3px;
+  box-sizing: border-box;
+  /* border: 1px solid aqua; */
+  background-color: #fff;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.Team-list{
+  /* box-sizing: border-box; */
+  /* border: 1px solid aquamarine; */
+  float: right;
+}
