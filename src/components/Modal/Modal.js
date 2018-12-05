@@ -15,11 +15,20 @@ class Modal extends Component {
   }
 
   render() {
+    let members = null;
+    if (this.props.avaiTeams !== undefined) {
+      members = this.props.avaiTeams.map(team => {
+        return (
+          <li data-team-id={team.id}>{team.name}</li>
+        )
+      })
+    }
     return (
       <Aux>
-        <Link to="/">
+        <Link to="/boards">
           <div className="Modal-Background"
             style={{
+              display: this.props.show ? 'block' : 'none',
               transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
               opacity: this.props.show ? '1' : '0'
             }}
@@ -31,6 +40,15 @@ class Modal extends Component {
             opacity: this.props.show ? '1' : '0'
           }}>
           {this.props.children}
+          <button onClick={this.props.deleteCard} data-list-id={this.props.list.id} data-card-id={this.props.list.cards[0].id} className="Button">
+            Delete
+          </button>
+          <button onClick={this.props.showAvaiMembers} className="Button">
+            Add Members
+          </button>
+          <ul>
+            {members}
+          </ul>
         </div>
       </Aux>
     )

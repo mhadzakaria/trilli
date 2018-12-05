@@ -3,13 +3,19 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  // console.log(state, action)
   switch (action.type) {
-    case 'START':
+    case 'LISTS_START':
       return {
         ...state,
         lists: action.lists
       };
-    case 'ADD_LIST':
+    case 'LISTS_UPD_LISTS':
+      return {
+        ...state,
+        lists: action.lists
+      };
+    case 'LISTS_ADD_LIST':
       return {
         ...state,
         lists: [
@@ -17,7 +23,7 @@ const reducer = (state = initialState, action) => {
           action.list
         ]
       };
-    case 'DEL_LIST':
+    case 'LISTS_DEL_LIST':
       return {
         ...state,
         lists: state.lists.filter(list => list.id !== action.id)

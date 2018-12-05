@@ -49,9 +49,9 @@ class CardCreator extends Component {
 
   componentDidMount() {
     this.loadingOpen();
-    Axios.get('/lists.json')
+    Axios.get('/lists')
       .then(response => {
-        if (response !==  null){
+        if (response.data.length !== 0){
           const keys = Object.keys(response.data)
           const newLists = keys.map(key => {
             return response.data[key]
@@ -77,7 +77,6 @@ class CardCreator extends Component {
               ...newIdFirebase
             ],
             lastId: newLists[newLists.length - 1].id,
-            loading: false,
             newCardName: [
               ...newCardsName
             ]
@@ -114,7 +113,8 @@ class CardCreator extends Component {
               })
             }
           }
-        }
+        };
+        this.setState({ loading: false });
       })
   }
 
@@ -380,7 +380,6 @@ class CardCreator extends Component {
           <Modal show={this.state.modalCard} closeModal={this.hideModalCard}>
             {modalContent}
           </Modal>
-          <Toolbars />
           <Route path="/home" exact component={Boards} />
           <Route
             path="/boards"

@@ -9,6 +9,9 @@ class TeamCreator extends Component {
     name: null,
     lastId: null
   }
+  componentDidMount() {
+    console.log("sasasasa")
+  };
 
   onChangeName = (event) => {
     const name = event.target.value

@@ -6,13 +6,13 @@ import Team from '../Body/Team/Team';
 
 class Header extends Component {
   render () {
-    const teams = this.props.teams.map((team, index) => {
-      return <Team key={index} name={team} />
+    const teams = this.props.teams.map(team => {
+      return <Team key={team.id} name={team.name} />
     })
     return (
       <Aux>
         <div className="Headers">
-          <div className="Header">asasaas</div>
+          <div className="Header">KALEM APP</div>
           <div className="Header">
             { teams }
           </div>

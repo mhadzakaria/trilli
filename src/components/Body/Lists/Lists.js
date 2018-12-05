@@ -13,7 +13,7 @@ class Lists extends Component {
       return !value.deleted
     })
     const cards = cardsFiltered.map(card => {
-      let pathName = "/card/" + card.id;
+      let pathName = "/boards/card/" + card.id;
       return (
         <Link to={pathName} key={card.id}>
           <Card id={card.id} title={card.title} teams={card.teams} showCard={this.props.showCard} listId={this.props.id} />

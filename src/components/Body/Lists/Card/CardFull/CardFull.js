@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Team from '../../../Team/Team'
 import './CardFull.css'
@@ -10,7 +11,9 @@ const cardFull = (props) => {
   return (
     <div>
       <h2>{card.title}</h2>
-      <button className="Button-CloseModal" onClick={props.closeModal}>x</button>
+      <Link to="/boards">
+        <button className="Button-CloseModal" onClick={props.closeModal}>x</button>
+      </Link>
       <p>in list {list.name}</p>
       <p>MEMBERS</p>
       <div className="Teams-List">

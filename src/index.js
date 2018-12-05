@@ -8,10 +8,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import listReducer from './store/reducers/list';
 import cardReducer from './store/reducers/card';
+import teamReducer from './store/reducers/team';
 
 const rootReducer = combineReducers({
   list: listReducer,
-  card: cardReducer
+  card: cardReducer,
+  team: teamReducer
 })
 
 const store = createStore(rootReducer);
