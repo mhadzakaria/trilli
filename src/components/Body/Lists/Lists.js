@@ -33,7 +33,7 @@ class Lists extends Component {
           <div className="Lists-new-card">
             <input onChange={this.props.newCardName} type="text" placeholder="Card name..." data-lists-id={this.props.id} />
             <button onClick={this.props.addNewCard} data-lists-id={this.props.id} className="Button">
-              <FontAwesomeIcon icon="plus" />  Add
+              <FontAwesomeIcon icon="plus-circle" />  Add
             </button>
           </div>
         </div>

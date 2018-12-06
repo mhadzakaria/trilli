@@ -8,9 +8,9 @@ import Layout from './components/Layout/Layout';
 import Boards from './components/Boards/Boards';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faGhost, faHome, faChalkboard, faPlus} from '@fortawesome/free-solid-svg-icons'
+import { faGhost, faHome, faChalkboard, faPlusCircle, faPlus, faMinusCircle} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faGhost, faHome, faChalkboard, faPlus)
+library.add(faGhost, faHome, faChalkboard, faPlusCircle, faPlus, faMinusCircle)
 
 class App extends Component {
   render() {

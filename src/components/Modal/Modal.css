@@ -26,3 +26,8 @@
       left: calc(50% - 250px);
   }
 }
+
+.Card-action{
+  clear: both;
+  padding-top: 10px;
+}

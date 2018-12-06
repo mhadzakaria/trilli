@@ -5,9 +5,16 @@
   border-radius: 3px;
   margin-bottom: 10px;
   overflow: hidden;
-  min-height: 150px;
+  /* min-height: 150px; */
 }
 
 .Team-list{
   float: right;
+  clear: both;
+}
+
+.Card-title{
+  width: fit-content;
+  float: left;
+  clear: both;
 }

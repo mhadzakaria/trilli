@@ -26,7 +26,7 @@ class Body extends Component {
 
     let newList = (
       <p onClick={this.props.newListForm}>
-        <FontAwesomeIcon icon="plus" /> Add New List
+        <FontAwesomeIcon icon="plus-circle" /> Add New List
       </p>
     );
     if (this.props.added) {

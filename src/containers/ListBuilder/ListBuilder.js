@@ -20,6 +20,7 @@ class CardCreator extends Component {
     loading: false,
     activeCard: null,
     listTitle: null,
+    membersList: false,
     lastId: null
   };
 
@@ -81,6 +82,10 @@ class CardCreator extends Component {
         };
         this.setState({ loading: false });
       })
+      .catch(error => {
+        this.setState({ loading: false });
+        alert(error)
+      })
     Axios.get('teams/')
       .then(response => {
         this.props.startTeam(response.data)
@@ -109,7 +114,10 @@ class CardCreator extends Component {
             loading: false,
           })
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          this.setState({ loading: false });
+          alert(error)
+        })
     }
   };
 
@@ -154,7 +162,7 @@ class CardCreator extends Component {
       
           const newLists = [...this.props.prLists];
           newLists[listIndex] = list;
-          this.props.updateList(newLists);        
+          this.props.updateList(newLists);
         })
         .catch(error => console.log(error))
     }
@@ -193,8 +201,90 @@ class CardCreator extends Component {
     this.setState({ loading: false, modalCard: false })
   }
 
-  addTeamsToCard = (event) => {
-    
+  addTeamToCardHandler = (event) => {
+    const teamId = parseInt(event.target.dataset.teamId);
+    const team = this.props.prTeams.filter(team => team.id === teamId)
+    if (team.length !== 0) {
+      const listActive = this.state.activeCard
+      const listIndex = this.props.prLists.findIndex(l => {
+        return l.id === listActive.id
+      });
+      const list = this.props.prLists[listIndex]
+
+      const cardActive = listActive.cards[0]
+      const cardIndex = list.cards.findIndex(c => c.id === cardActive.id)
+      const card = list.cards[cardIndex]
+      if (card.teams.filter(team => team.id === teamId).length === 0) {
+        Axios.get('cards/'+ cardActive.id +'/add_team/'+ teamId)
+          .then(response => {
+            const newCard = {
+              ...card,
+              teams: card.teams.concat(team[0])
+            }
+
+            const newCards = [...list.cards]
+            newCards[cardIndex] = newCard
+
+            const newList = {
+              ...list,
+              cards: newCards
+            }
+
+            const newLists = [...this.props.prLists];
+            newLists[listIndex] = newList;
+            this.setState({
+              activeCard: {
+                ...this.state.activeCard,
+                cards: [newCard]
+              }
+            })
+            this.props.updateList(newLists);
+
+          })
+      }
+    }
+  }
+
+  remTeamToCardHandler = (event) => {
+    const teamId = parseInt(event.target.dataset.teamId);
+    const team = this.props.prTeams.filter(team => team.id === teamId)
+    if (team.length !== 0) {
+      const listActive = this.state.activeCard
+      const listIndex = this.props.prLists.findIndex(l => {
+        return l.id === listActive.id
+      });
+      const list = this.props.prLists[listIndex]
+
+      const cardActive = listActive.cards[0]
+      const cardIndex = list.cards.findIndex(c => c.id === cardActive.id)
+      const card = list.cards[cardIndex]
+
+      Axios.get('cards/'+ cardActive.id +'/rem_team/'+ teamId)
+        .then(response => {
+          const newCard = {
+            ...card,
+            teams: card.teams.filter(team => team.id !== teamId)
+          }
+
+          const newCards = [...list.cards]
+          newCards[cardIndex] = newCard
+
+          const newList = {
+            ...list,
+            cards: newCards
+          }
+
+          const newLists = [...this.props.prLists];
+          newLists[listIndex] = newList;
+          this.setState({
+            activeCard: {
+              ...this.state.activeCard,
+              cards: [newCard]
+            }
+          })
+          this.props.updateList(newLists);
+        })
+    }
   }
   // CRUD <<<<<<<<<<<
 
@@ -272,6 +362,12 @@ class CardCreator extends Component {
     this.setState({ loading: true })
   }
 
+  showAvaiMembersHandler = () => {
+    this.setState({
+      membersList: !this.state.membersList
+    })
+  }
+
   render() {
     let modalContent = null;
     if (this.state.modalCard) {
@@ -285,7 +381,16 @@ class CardCreator extends Component {
 
     let modal = null;
     if (this.state.activeCard !== null) {
-      modal = <Modal show={this.state.modalCard} closeModal={this.hideModalCard} list={this.state.activeCard} deleteCard={this.deleteCardHandler}>
+      modal = <Modal
+                show={this.state.modalCard}
+                closeModal={this.hideModalCard}
+                list={this.state.activeCard}
+                deleteCard={this.deleteCardHandler}
+                avaiTeams={this.props.prTeams}
+                addTeam={this.addTeamToCardHandler}
+                remTeam={this.remTeamToCardHandler}
+                showAvaiMembers={this.showAvaiMembersHandler}
+                showMembers={this.state.membersList}>
         {modalContent}
       </Modal>
     }

@@ -11,7 +11,7 @@ class Modal extends Component {
   }
 
   componentWillUpdate() {
-    console.log('[Modal] WillUpdate');
+    // console.log('[Modal] WillUpdate');
   }
 
   render() {
@@ -19,7 +19,9 @@ class Modal extends Component {
     if (this.props.avaiTeams !== undefined) {
       members = this.props.avaiTeams.map(team => {
         return (
-          <li data-team-id={team.id}>{team.name}</li>
+          <li key={team.id}>
+            {team.name} <button className="Button" data-team-id={team.id} onClick={this.props.addTeam}>Add</button> | <button className="Button" data-team-id={team.id} onClick={this.props.remTeam}> Delete </button>
+          </li>
         )
       })
     }
@@ -40,15 +42,17 @@ class Modal extends Component {
             opacity: this.props.show ? '1' : '0'
           }}>
           {this.props.children}
-          <button onClick={this.props.deleteCard} data-list-id={this.props.list.id} data-card-id={this.props.list.cards[0].id} className="Button">
-            Delete
-          </button>
-          <button onClick={this.props.showAvaiMembers} className="Button">
-            Add Members
-          </button>
-          <ul>
-            {members}
-          </ul>
+          <div className="Card-action">
+            <button onClick={this.props.deleteCard} data-list-id={this.props.list.id} data-card-id={this.props.list.cards[0].id} className="Button">
+              Delete
+            </button>
+            <button onClick={this.props.showAvaiMembers} className="Button">
+              Add Members
+            </button>
+            <ul style={{display: this.props.showMembers ? 'block' : 'none'}}>
+              {members}
+            </ul>
+          </div>
         </div>
       </Aux>
     )
