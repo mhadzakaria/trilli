@@ -12,7 +12,6 @@ import Axios from '../../axios';
 class CardCreator extends Component {
 
   state = {
-    teams: ['Ahmad', 'Zaka', 'Backend', 'Server'],
     newCardName: [],
     lists: [],
     formNewList: false,
@@ -30,31 +29,23 @@ class CardCreator extends Component {
       .then(response => {
         if (response.data.length !== 0){
           // INITIALIZE STATE
-          const keys = Object.keys(response.data)
-          const newLists = keys.map(key => {
-            return response.data[key]
-          })
-  
-          const newCardsName = newLists.map(list => {
+          const newCardsName = response.data.map(list => {
             return { listId: list.id, newName: '' }
           })
   
           this.setState({
-            lists: [
-              ...newLists
-            ],
             newCardName: [
               ...newCardsName
             ]
           })
-          this.props.startList(this.state.lists);
+          this.props.startList(response.data);
 
           // redirect to selected card
           const currentURL = new URL(window.location.href)
           const pathName = currentURL.pathname.split("/")
           
           if (pathName[2] === "card") {
-            const cards = this.state.lists.map(list => {
+            const cards = response.data.map(list => {
               return (
                 list.cards.map(card => {
                   return ({list: list, card: card})
@@ -419,7 +410,9 @@ class CardCreator extends Component {
 const mapStateToProps = state => {
   return {
     prLists: state.list.lists,
-    prTeams: state.team.teams
+    prTeams: state.team.teams,
+    prTeamsA: state.team,
+    prCards: state.card,
   }
 };
 
