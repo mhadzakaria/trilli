@@ -277,6 +277,47 @@ class CardCreator extends Component {
         })
     }
   }
+
+  moveCardHandler = (event) => {
+    // let arrow = "left";
+    // if (event.target.className.includes("right")) {
+      //   arrow = "right"
+      // };
+    const arrow = event.target.dataset.arrow;
+
+    const lists = [...this.props.prLists]
+    const activeListIndex = lists.findIndex(list => this.state.activeCard.id === list.id)
+    if (activeListIndex !== -1) {
+      if ( (activeListIndex !== 0 && arrow === "left") || ( (lists.length - 1) !== activeListIndex && arrow === "right" ) ) {
+        const addedListIndex = (arrow === "right") ? activeListIndex + 1 : activeListIndex - 1
+        const addedList = lists[addedListIndex]
+        const newAddedList = {
+          ...addedList,
+          cards: ([this.state.activeCard.cards[0], ...addedList.cards])
+        }
+
+        const minusList = lists[activeListIndex]
+        const newMinusList = {
+          ...minusList,
+          cards: minusList.cards.filter(card => card.id !== this.state.activeCard.cards[0].id)
+        }
+
+        Axios.get('cards/'+ this.state.activeCard.cards[0].id +'/move_card/'+ addedList.id)
+        .then(response => {
+          const newPrLists = [...this.props.prLists];
+          newPrLists[activeListIndex] = newMinusList;
+          newPrLists[addedListIndex] = newAddedList;
+          const newActiveCard = {...newAddedList}
+          newActiveCard.cards = [this.state.activeCard.cards[0]]
+          this.setState({
+            activeCard: newActiveCard
+          })
+
+          this.props.startList(newPrLists);
+        })
+      }
+    }
+  }
   // CRUD <<<<<<<<<<<
 
   changeListTitle = (event) => {
@@ -381,7 +422,9 @@ class CardCreator extends Component {
                 addTeam={this.addTeamToCardHandler}
                 remTeam={this.remTeamToCardHandler}
                 showAvaiMembers={this.showAvaiMembersHandler}
-                showMembers={this.state.membersList}>
+                showMembers={this.state.membersList}
+                moveCard={this.moveCardHandler}
+              >
         {modalContent}
       </Modal>
     }

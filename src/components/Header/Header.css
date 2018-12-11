@@ -1,7 +1,6 @@
 .Headers{
   flex: none;
   height: auto;
-  overflow: hidden;
   padding: 8px 4px 8px 8px;
   position: relative;
   transition: padding .1s ease-in;
@@ -10,4 +9,14 @@
   float: left;
   margin-right: 5px;
   color: white;
+}
+
+.dropdown-header{
+  font-size: 14px;
+    text-align: center;
+    padding: 0px;
+}
+
+.dropdown-button{
+  background: rgba(255, 255, 255, 0.3)
 }

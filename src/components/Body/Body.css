@@ -1,7 +1,8 @@
 .Body{
   flex-grow: 1;
   position: relative;
-  margin: 0px 8px
+  margin: 0px 8px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 .Body-Wrapper{

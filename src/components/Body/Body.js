@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Aux from '../../hoc/Aux/Aux';
 import './Body.css';
+import '../../App.css';
 import Lists from './Lists/Lists';
 import Header from '../Header/Header'
 
@@ -25,9 +25,7 @@ class Body extends Component {
     });
 
     let newList = (
-      <p onClick={this.props.newListForm}>
-        <FontAwesomeIcon icon="plus-circle" /> Add New List
-      </p>
+      <p className="fa-p"><i className="fa fa-plus-circle" onClick={this.props.newListForm}></i> Add New List </p>
     );
     if (this.props.added) {
       newList = (

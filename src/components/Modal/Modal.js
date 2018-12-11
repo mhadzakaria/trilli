@@ -52,6 +52,8 @@ class Modal extends Component {
             <ul style={{display: this.props.showMembers ? 'block' : 'none'}}>
               {members}
             </ul>
+            <span className="fa fa-arrow-circle-left fa-2x" onClick={this.props.moveCard} data-arrow="left" title="To left"></span>
+            <span className="fa fa-arrow-circle-right fa-2x" onClick={this.props.moveCard} data-arrow="right" title="To right"></span>
           </div>
         </div>
       </Aux>
